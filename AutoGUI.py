@@ -6,6 +6,10 @@ import pydirectinput as dp
 from MatchTool import ImageMatch
 gui.FAILSAFE=False
 
+def hide_mouse():
+    width, height = gui.size()
+    dp.moveTo(width, height, 0.1)
+
 def Get_Scene():
     image = gui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -18,8 +22,7 @@ def Get_Object(obj):
     template = cv2.imread(obj)
     target = Get_Scene()
     min_loc, width, height, val = ImageMatch(target, template)
-    dp.moveTo(int(min_loc[0]+width/2), int(min_loc[1]+height/2), 0.1)
-    print(int(min_loc[0]+width/2), int(min_loc[1]+height/2))
+    dp.moveTo(int(min_loc[0]+width/2), int(min_loc[1]+height/2), 0.3)
     if np.abs(val) > 1e-10:
         return False
     else:
@@ -31,6 +34,26 @@ def LeftClick():
 def Open():
     dp.doubleClick()
 
+def Wait_Until(objs, inter_time=1, max_inter=30):
+    i = 0
+    while i < max_inter:
+        i = i+1
+        for obj in objs:
+            if Get_Object(obj):
+                return True
+        sleep(inter_time)
+        
+    return False
+
+def Call_Mouse():
+    dp.keyDown('alt')
+
+def Release_Mouse():
+    dp.keyUp('alt')
+
+def Click_Key(key):
+    dp.keyDown(key)
+    dp.keyUp(key)
+
 if __name__=='__main__':
-    sleep(2)
-    dp.moveTo(1441,824)
+    hide_mouse()
