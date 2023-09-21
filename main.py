@@ -1,4 +1,3 @@
-import os
 import AutoGUI as g
 from time import sleep
 
