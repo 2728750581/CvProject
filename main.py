@@ -6,6 +6,7 @@ LOGO = 'bin\\logo.png'
 SHOTCUT = 'bin\\shotcut.png'
 START = 'bin\\start.png'
 TITLE = 'bin\\title.png'
+OK = 'bin\\ok.png'
 
 
 def Openning():
@@ -39,12 +40,12 @@ def Open_StarRail():
         sleep(1)
         g.Get_Object(SHOTCUT)
         g.Open()
-        sleep(2)
-        # if Openning():
-        #     print('《崩坏：星穹铁道》已打开')
-        #     print('《崩坏：星穹铁道》正在运行')
-        # else:
-        #     print('打开异常，请联系管理员')
+        sleep(1)
+        if Openning():
+            print('《崩坏：星穹铁道》已打开')
+            print('《崩坏：星穹铁道》正在运行')
+        else:
+            print('打开异常，请联系管理员')
 
 
 def Uncover_StarRail():
@@ -52,6 +53,7 @@ def Uncover_StarRail():
     if Openning() and not Uncovering():
         g.Get_Object(LOGO)
         g.LeftClick()
+        sleep(1)
         if Uncovering():
             print('《崩坏：星穹铁道》显示在上方')
             return True
@@ -70,6 +72,13 @@ def Login_StarRail():
     """登录游戏"""
     pass
 
-Open_StarRail()
-#Uncover_StarRail()
-#Start_StarRail()
+def Ok():
+    g.Get_Object(OK)
+    g.LeftClick()
+
+
+# Open_StarRail()
+# Uncover_StarRail()
+# Start_StarRail()
+sleep(2)
+Ok()

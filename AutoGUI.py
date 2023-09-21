@@ -1,4 +1,5 @@
 import cv2
+from time import sleep
 import numpy as np
 import pyautogui as gui
 import pydirectinput as dp
@@ -31,4 +32,5 @@ def Open():
     dp.doubleClick()
 
 if __name__=='__main__':
-    dp.moveTo(725, 1005)
+    sleep(2)
+    dp.moveTo(1441,824)
