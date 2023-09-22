@@ -1,3 +1,5 @@
+import logging
+import CvError
 import AutoGUI as g
 from time import sleep
 
@@ -13,16 +15,32 @@ INSTANCE_OFF = 'bin\\instance_off.png'
 GOLD_OFF = 'bin\\gold_off.png'
 GOLD_ON = 'bin\\gold_on.png'
 
+# 设置日志模块的配置
+logger = logging.getLogger(__name__)
+logger.setLevel(level = logging.INFO)
+handler = logging.FileHandler("bin\\log.txt", encoding="utf-8", mode="a")
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s -- %(message)s')
+handler.setFormatter(formatter)
+
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+console.setFormatter(formatter)
+ 
+logger.addHandler(handler)
+logger.addHandler(console)
+
+ 
 
 def Openning():
     """判断《崩坏：星穹铁道》是否运行?"""
-    print("-- 【判断】《崩坏：星穹铁道》是否开启：")
+    logger.info("【判断】《崩坏：星穹铁道》是否开启：")
     g.Get_Scene()
     if g.Get_Object(LOGO):
-        print("-- 【结果】已开启。")
+        logger.info("【结果】已开启。")
         return True
     else:
-        print("-- 【结果】未开启。")
+        logger.warning("【结果】未开启。")
         return False
 
 def Uncovering():
@@ -30,84 +48,79 @@ def Uncovering():
     if not Openning():
         return False
     else:
-        print("-- 【判断】《崩坏：星穹铁道》是否显示在上方：")
+        logger.info("【判断】《崩坏：星穹铁道》是否显示在上方：")
         if g.Get_Object(START):
-            print('-- 【结果】处于启动器界面。')
+            logger.info('【结果】处于启动器界面。')
         elif g.Get_Object(TITLE):
-            print('-- 【结果】已进入游戏。')
+            logger.info('【结果】已进入游戏。')
         else:
-            print('-- 【结果】未显示')
+            logger.warning('【结果】未显示')
             return False
         return True        
 
 def Open_StarRail():
     """运行《崩坏：星穹铁道》"""
     if Openning():
-        print('《崩坏：星穹铁道》正在运行')
+        logger.info('《崩坏：星穹铁道》正在运行')
     else:
         g.Desktop()
         sleep(1)
         g.Get_Object(SHOTCUT)
         g.Open()
         if g.Wait_Until({LOGO}):
-            print('《崩坏：星穹铁道》已打开')
-            print('《崩坏：星穹铁道》正在运行')
+            logger.info('《崩坏：星穹铁道》已打开')
         else:
-            print('打开异常，请联系管理员')
+            logger.warning('打开异常，请联系管理员')
 
 def Uncover_StarRail():
     """显示《崩坏：星穹铁道》"""
     if not Uncovering():
         # 点击任务栏图标
-        print("-- 【操作】点击任务栏图标")
+        logger.info("【操作】点击任务栏图标")
         g.hide_mouse()
         g.sleep(1)
         if g.Get_Object(LOGO):
             g.LeftClick()
             g.hide_mouse()
         # 等待结果
-        print("-- 【等待】完成操作,监测屏幕中。。。")
+        logger.info("【等待】完成操作,监测屏幕中。。。")
         if g.Wait_Until({TITLE}):
-            print('-- 【结果】监测到窗口标题，操作完成。')
+            logger.info('【结果】监测到窗口标题，操作完成。')
             return True
         else:
-            print('-- 【异常】未监测到窗体标题，异常！')
+            logger.warning('【异常】未监测到窗体标题，异常！')
             return False
     return False
 
 def Start_StarRail():
     """开始游戏"""
     g.hide_mouse()
-    print("-- 【操作】点击“进入游戏”按钮")
+    logger.info("【操作】点击“进入游戏”按钮")
     if g.Get_Object(START):
         g.LeftClick()
         g.hide_mouse()
     # 等待结果
-    print("-- 【等待】完成操作,监测屏幕中。。。")
+    logger.info("【等待】完成操作,监测屏幕中。。。")
     if g.Wait_Until({ENTER}):
-        print('-- 【结果】监测到窗口标题，操作完成。')
+        logger.info('【结果】监测到窗口标题，操作完成。')
         return True
     else:
-        print('-- 【异常】未监测到进入游戏按钮""，异常！')
+        logger.warning('【异常】未监测到进入游戏按钮""，异常！')
         return False   
-
-def Login_StarRail():
-    """登录游戏"""
-    pass
 
 def Enter_StarRail():
     g.hide_mouse()
-    print("-- 【操作】点击“进入游戏”按钮")
+    logger.info("【操作】点击“进入游戏”按钮")
     if g.Get_Object(ENTER):
         g.LeftClick()
-        print("-- 【等待】操作完成，监测屏幕中")
+        logger.info("【等待】操作完成，监测屏幕中")
     else:
-        print("-- 【异常】无法定位“进入游戏”按钮")
+        logger.info("【异常】无法定位“进入游戏”按钮")
     if g.Wait_Until({PHONE}):
-        print("-- 【结果】监测到“手机”按钮，已进入游戏")
+        logger.info("【结果】监测到“手机”按钮，已进入游戏")
         return True
     else:
-        print("-- 【结果】未监测到“手机”按钮，异常")
+        logger.warning("【结果】未监测到“手机”按钮，异常")
         return False
 
 def Ok():
@@ -143,11 +156,6 @@ def Gold():
         g.LeftClick()
 
 
-Open_StarRail()
-Uncover_StarRail()
-Start_StarRail()
-Uncover_StarRail()
-Enter_StarRail()
-Guidence()
-Instance()
+if __name__=='__main__':
+    Uncover_StarRail()
 
