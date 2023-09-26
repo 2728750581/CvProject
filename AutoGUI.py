@@ -20,8 +20,6 @@ def Store_Scene():
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     cv2.imwrite("..\\qsign-onekey-1.1.9-fix1\\data\\images\\scene.png", image)
     return True
-    
-
 
 def Desktop():
     gui.hotkey('win', 'd')

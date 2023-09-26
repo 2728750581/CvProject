@@ -56,7 +56,7 @@ def Uncovering():
         else:
             logger.warning('【结果】未显示')
             return False
-        return True        
+        return True      
 
 def Open_StarRail():
     """运行《崩坏：星穹铁道》"""
