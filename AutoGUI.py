@@ -15,6 +15,14 @@ def Get_Scene():
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     return image
 
+def Store_Scene():
+    image = gui.screenshot()
+    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    cv2.imwrite("..\\qsign-onekey-1.1.9-fix1\\data\\images\\scene.png", image)
+    return True
+    
+
+
 def Desktop():
     gui.hotkey('win', 'd')
 
@@ -56,4 +64,4 @@ def Click_Key(key):
     dp.keyUp(key)
 
 if __name__=='__main__':
-    hide_mouse()
+    Store_Scene()
