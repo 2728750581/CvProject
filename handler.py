@@ -1,5 +1,5 @@
 import requests
-import AutoGUI as g
+import tool.AutoGUI as g
 from flask import Flask, request
  
 app = Flask(__name__)

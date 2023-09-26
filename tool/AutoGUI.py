@@ -3,7 +3,7 @@ from time import sleep
 import numpy as np
 import pyautogui as gui
 import pydirectinput as dp
-from MatchTool import ImageMatch
+from tool.MatchTool import ImageMatch
 gui.FAILSAFE=False
 
 def hide_mouse():

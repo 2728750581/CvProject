@@ -1,6 +1,6 @@
 import logging
 import CvError
-import AutoGUI as g
+import tool.AutoGUI as g
 from time import sleep
 
 LOGO = 'bin\\logo.png'
