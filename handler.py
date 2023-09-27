@@ -10,8 +10,8 @@ def post_data():
     print(request.get_json())
     if request.get_json().get('message_type') == 'private': 
         # 获取需要的消息
-        QQ_id = request.get_json().get('sender').get('user_id')           # 发送者的QQ号
-        Xingxi_text = request.get_json().get('raw_message')               # 发的什么东西
+        QQ_id = request.get_json().get('sender').get('user_id')
+        Xingxi_text = request.get_json().get('raw_message')
 
         # 处理消息
         if Xingxi_text == "电脑截屏":

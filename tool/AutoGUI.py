@@ -28,11 +28,23 @@ def Get_Object(obj):
     template = cv2.imread(obj)
     target = Get_Scene()
     min_loc, width, height, val = ImageMatch(target, template)
-    dp.moveTo(int(min_loc[0]+width/2), int(min_loc[1]+height/2), 0.3)
     if np.abs(val) > 1e-10:
         return False
     else:
+        dp.moveTo(int(min_loc[0]+width/2), int(min_loc[1]+height/2), 0.3)
         return True
+
+def Detect_Object(obj):
+    # 返回图片右上角坐标
+    template = cv2.imread(obj)
+    target = Get_Scene()
+    min_loc, _, _, val = ImageMatch(target, template)
+    if np.abs(val) > 1e-10:
+        return (-1, -1)
+    else:
+        return min_loc
+
+
 
 def LeftClick():
     dp.leftClick()
